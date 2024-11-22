@@ -1,0 +1,5 @@
+main: com.ar.aksgaming.pvpthingsnpcaddon.NpcAddon.java
+name: PvPThingsNPCAddon
+version: 1.0
+author: Ask Gaming
+depend: [PvPThings, Citizens]
