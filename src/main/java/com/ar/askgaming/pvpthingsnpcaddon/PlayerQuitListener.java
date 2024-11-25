@@ -6,6 +6,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 
+import com.ar.askgaming.pvpthings.PvpPlayer;
+
 
 public class PlayerQuitListener implements Listener {
 
@@ -16,8 +18,8 @@ public class PlayerQuitListener implements Listener {
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent e) {
         Player player = e.getPlayer();
-
-        if (plugin.getPvpThings().getPvpManager().getPvpPlayer(player).isInCombat()) {
+        PvpPlayer pvp = plugin.getPvpThings().getPvpManager().loadOrCreatePvpPlayer(player);
+        if (pvp.isInCombat()) {
             plugin.createNpcPlayerLink(player);
 
             player.getEquipment().clear();

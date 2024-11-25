@@ -8,6 +8,8 @@ import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Damageable;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.ar.askgaming.pvpthings.PvpThings;
@@ -15,10 +17,13 @@ import com.ar.askgaming.pvpthings.PvpThings;
 import net.citizensnpcs.api.CitizensAPI;
 import net.citizensnpcs.api.ai.goals.TargetNearbyEntityGoal;
 import net.citizensnpcs.api.ai.goals.WanderGoal;
+import net.citizensnpcs.api.event.NPCDamageByEntityEvent;
 import net.citizensnpcs.api.npc.NPC;
 import net.citizensnpcs.api.npc.NPCRegistry;
 import net.citizensnpcs.api.trait.trait.Equipment;
+import net.citizensnpcs.npc.EntityController;
 import net.citizensnpcs.trait.AttributeTrait;
+import net.citizensnpcs.trait.ScaledMaxHealthTrait;
 
 public class NpcAddon extends JavaPlugin {
 
@@ -55,7 +60,8 @@ public class NpcAddon extends JavaPlugin {
     }
     public void onDisable() {
         for (NPC npc : getNpcAlives().keySet()) {
-            ((Damageable) npc.getEntity()).setHealth(0);
+
+            ((Player) npc.getEntity()).setHealth(0);       
             npc.destroy();
         }
     }
@@ -101,11 +107,12 @@ public class NpcAddon extends JavaPlugin {
         npcAlives.put(npc, System.currentTimeMillis());
         
     }
+
     public void switchFromNpc(Player p) {
 
         NPC npc = getNpcPlayerLink().get(p);
-
-        npc.data().setPersistent(NPC.Metadata.DROPS_ITEMS,false);
+        p.setHealth(((Damageable) npc.getEntity()).getHealth());
+        npc.data().setPersistent(NPC.Metadata.DROPS_ITEMS,false);   
 
         p.teleport(npc.getEntity().getLocation());
         p.getInventory().setContents(npc.getOrAddTrait(net.citizensnpcs.api.trait.trait.Inventory.class).getContents());

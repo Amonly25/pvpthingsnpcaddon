@@ -1,0 +1,4 @@
+com\ar\askgaming\pvpthingsnpcaddon\NpcAddon.class
+com\ar\askgaming\pvpthingsnpcaddon\CheckNpcTask.class
+com\ar\askgaming\pvpthingsnpcaddon\PlayerJoinListener.class
+com\ar\askgaming\pvpthingsnpcaddon\PlayerQuitListener.class
