@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Set;
 
+import org.bukkit.Location;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Damageable;
 import org.bukkit.entity.EntityType;
@@ -113,8 +114,8 @@ public class NpcAddon extends JavaPlugin {
         NPC npc = getNpcPlayerLink().get(p);
         p.setHealth(((Damageable) npc.getEntity()).getHealth());
         npc.data().setPersistent(NPC.Metadata.DROPS_ITEMS,false);   
-
-        p.teleport(npc.getEntity().getLocation());
+        Location l = npc.getEntity().getLocation();
+ 
         p.getInventory().setContents(npc.getOrAddTrait(net.citizensnpcs.api.trait.trait.Inventory.class).getContents());
         p.getInventory().setItemInOffHand(npc.getOrAddTrait(Equipment.class).get(Equipment.EquipmentSlot.OFF_HAND));
         p.getInventory().setHelmet(npc.getOrAddTrait(Equipment.class).get(Equipment.EquipmentSlot.HELMET));
@@ -125,6 +126,14 @@ public class NpcAddon extends JavaPlugin {
         npc.destroy();
         npcAlives.remove(npc);
         npcPlayerLink.remove(p);
+
+        getServer().getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
+            @Override
+            public void run() {
+                p.teleport(l);
+            }
+        }, 10L);
+
     }
     
 }
