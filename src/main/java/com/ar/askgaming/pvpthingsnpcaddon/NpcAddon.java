@@ -9,8 +9,6 @@ import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Damageable;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.ar.askgaming.pvpthings.PvpThings;
@@ -18,19 +16,19 @@ import com.ar.askgaming.pvpthings.PvpThings;
 import net.citizensnpcs.api.CitizensAPI;
 import net.citizensnpcs.api.ai.goals.TargetNearbyEntityGoal;
 import net.citizensnpcs.api.ai.goals.WanderGoal;
-import net.citizensnpcs.api.event.NPCDamageByEntityEvent;
 import net.citizensnpcs.api.npc.NPC;
 import net.citizensnpcs.api.npc.NPCRegistry;
 import net.citizensnpcs.api.trait.trait.Equipment;
-import net.citizensnpcs.npc.EntityController;
 import net.citizensnpcs.trait.AttributeTrait;
-import net.citizensnpcs.trait.ScaledMaxHealthTrait;
 
 public class NpcAddon extends JavaPlugin {
 
     private PvpThings pvpThings;
 
     public PvpThings getPvpThings() {
+        if (pvpThings == null) {
+            pvpThings = (PvpThings) getServer().getPluginManager().getPlugin("PvpThings");
+        }
         return pvpThings;
     }
 
