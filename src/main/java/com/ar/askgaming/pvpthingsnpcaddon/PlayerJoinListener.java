@@ -24,7 +24,9 @@ public class PlayerJoinListener implements Listener{
                 plugin.switchFromNpc(p);
             } else {
                 p.setHealth(0);
+                plugin.getNpcAlives().remove(npc);
                 plugin.getNpcPlayerLink().remove(p);
+                npc.destroy();
             }
         }
     }
