@@ -41,6 +41,9 @@ public class NpcAddon extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(this), this);
         getServer().getPluginManager().registerEvents(new PlayerQuitListener(this), this);
 
+        new NPCDespawnListener(this);
+        new PlayerDeathListener(this);
+
         if (getServer().getPluginManager().getPlugin("Citizens") == null) {
             getLogger().severe("Citizens plugin not found!");
             getServer().getPluginManager().disablePlugin(this);
@@ -88,9 +91,14 @@ public class NpcAddon extends JavaPlugin {
         npc.getOrAddTrait(Equipment.class).set(Equipment.EquipmentSlot.CHESTPLATE, p.getInventory().getChestplate());
         npc.getOrAddTrait(Equipment.class).set(Equipment.EquipmentSlot.LEGGINGS, p.getInventory().getLeggings());
         npc.getOrAddTrait(Equipment.class).set(Equipment.EquipmentSlot.BOOTS, p.getInventory().getBoots());
-        npc.getOrAddTrait(AttributeTrait.class).setAttributeValue(Attribute.MOVEMENT_SPEED, 0.75);
+        npc.getOrAddTrait(AttributeTrait.class).setAttributeValue(Attribute.MOVEMENT_SPEED, 0.50);
         npc.getOrAddTrait(AttributeTrait.class).setAttributeValue(Attribute.MAX_HEALTH, 20);
-        ((Damageable) npc.getEntity()).setHealth(p.getHealth());
+        double dmg = 0;
+        if (p.getHealth() <= 1){
+            ((Damageable) npc.getEntity()).setHealth(1);
+        } else {
+            ((Damageable) npc.getEntity()).setHealth(p.getHealth());
+        }
         
         npc.data().setPersistent(NPC.Metadata.DEFAULT_PROTECTED,false);
         npc.data().setPersistent(NPC.Metadata.DROPS_ITEMS,true);
@@ -130,7 +138,7 @@ public class NpcAddon extends JavaPlugin {
             public void run() {
                 p.teleport(l);
             }
-        }, 10L);
+        }, 20L);
 
     }
     

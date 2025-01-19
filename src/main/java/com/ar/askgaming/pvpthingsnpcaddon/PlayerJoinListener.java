@@ -20,6 +20,13 @@ public class PlayerJoinListener implements Listener{
         
         if (plugin.getNpcPlayerLink().get(p) != null){
             NPC npc = plugin.getNpcPlayerLink().get(p);
+            if (npc == null){
+                p.setHealth(0);
+                plugin.getNpcAlives().remove(npc);
+                plugin.getNpcPlayerLink().remove(p);
+                return;
+
+            }
             if (npc.isSpawned()){
                 plugin.switchFromNpc(p);
             } else {
