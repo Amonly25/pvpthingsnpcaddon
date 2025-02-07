@@ -1,14 +1,11 @@
 package com.ar.askgaming.pvpthingsnpcaddon;
 
-import org.bukkit.Location;
 import org.bukkit.entity.Damageable;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.inventory.ItemStack;
 
 import net.citizensnpcs.api.event.NPCDespawnEvent;
 import net.citizensnpcs.api.npc.NPC;
-import net.citizensnpcs.api.trait.trait.Equipment;
 
 public class NPCDespawnListener implements Listener{
 
